@@ -89,12 +89,12 @@ function useReveal() {
 
 // ── Certs with expandable images ──
 const CERTS = [
-  { name: 'HCIA-IoT V3.0',                              issuer: 'Huawei Technologies',                              badge: 'Certified',  img: '/certs/cert1.jpg' },
+  { name: 'HCIA-IoT V3.0',                              issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert6.jpg' },
   { name: 'HCIA-openEuler V2.0',                        issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert2.jpg' },
-  { name: 'Cloud Advanced: Architecture & Technologies', issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert3.jpg' },
-  { name: 'Cyber Warriors CTF Training',                issuer: 'Cybersecurity — Attacker Mindset, CTF Challenges', badge: 'Completed',  img: '/certs/cert4.jpg' },
-  { name: 'Raspberry Pi Workshop',                      issuer: 'Embedded Systems, GPIO, Hardware Prototyping',      badge: 'Completed',  img: '/certs/cert5.jpg' },
-  { name: 'IEEE Member',                                issuer: 'Institute of Electrical and Electronics Engineers', badge: 'Active',     img: '/certs/cert6.jpg' },
+  { name: 'Cloud Advanced: Architecture & Technologies', issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert1.jpg' },
+  { name: 'Cyber Warriors CTF Training',                issuer: 'National Cyber Security Center of Jordan — 2024',  badge: 'Completed',  img: '/certs/cert5.jpg' },
+  { name: 'Raspberry Pi Workshop',                      issuer: 'IEEE Robotics & Automation Society (RAS)',         badge: 'Completed',  img: '/certs/cert4.jpg' },
+  { name: 'Python Workshop',                            issuer: 'IEEE RAS BAU — Eng. Saleh Ghannma',                badge: 'Completed',  img: '/certs/cert3.jpg' },
 ];
 
 function CertSection() {
