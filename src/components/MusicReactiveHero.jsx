@@ -19,81 +19,103 @@ export const MusicReactiveHero = () => {
     constructor(width, height) {
       this.width = width;
       this.height = height;
-      this.grainCanvas = document.createElement('canvas');
-      this.grainCanvas.width = width;
-      this.grainCanvas.height = height;
-      this.grainCtx = this.grainCanvas.getContext('2d');
+      try {
+        this.grainCanvas = document.createElement('canvas');
+        this.grainCanvas.width = width;
+        this.grainCanvas.height = height;
+        this.grainCtx = this.grainCanvas.getContext('2d');
+      } catch (err) {
+        console.error("FilmGrain initialization error:", err);
+        this.grainCtx = null;
+      }
       this.grainData = null;
       this.frame = 0;
       this.generateGrainPattern();
     }
 
     generateGrainPattern() {
-      const imageData = this.grainCtx.createImageData(this.width, this.height);
-      const data = imageData.data;
-      
-      for (let i = 0; i < data.length; i += 4) {
-        const grain = Math.random();
-        const value = grain * 255;
-        data[i] = value;     // R
-        data[i + 1] = value; // G
-        data[i + 2] = value; // B
-        data[i + 3] = 255;   // A
-      }
-      
-      this.grainData = imageData;
-    }
-
-    update() {
-      this.frame++;
-      
-      if (this.frame % 2 === 0) {
-        const data = this.grainData.data;
+      if (!this.grainCtx) return;
+      try {
+        const imageData = this.grainCtx.createImageData(this.width, this.height);
+        const data = imageData.data;
         
         for (let i = 0; i < data.length; i += 4) {
           const grain = Math.random();
-          const time = this.frame * 0.01;
-          const x = (i / 4) % this.width;
-          const y = Math.floor((i / 4) / this.width);
-          
-          const pattern = Math.sin(x * 0.01 + time) * Math.cos(y * 0.01 - time);
-          const value = (grain * 0.8 + pattern * 0.2) * 255;
-          
-          data[i] = value;
-          data[i + 1] = value;
-          data[i + 2] = value;
+          const value = grain * 255;
+          data[i] = value;     // R
+          data[i + 1] = value; // G
+          data[i + 2] = value; // B
+          data[i + 3] = 255;   // A
         }
         
-        this.grainCtx.putImageData(this.grainData, 0, 0);
+        this.grainData = imageData;
+      } catch (err) {
+        console.error("generateGrainPattern error:", err);
+      }
+    }
+
+    update() {
+      if (!this.grainCtx || !this.grainData) return;
+      this.frame++;
+      
+      try {
+        if (this.frame % 2 === 0) {
+          const data = this.grainData.data;
+          
+          for (let i = 0; i < data.length; i += 4) {
+            const grain = Math.random();
+            const time = this.frame * 0.01;
+            const x = (i / 4) % this.width;
+            const y = Math.floor((i / 4) / this.width);
+            
+            const pattern = Math.sin(x * 0.01 + time) * Math.cos(y * 0.01 - time);
+            const value = (grain * 0.8 + pattern * 0.2) * 255;
+            
+            data[i] = value;
+            data[i + 1] = value;
+            data[i + 2] = value;
+          }
+          
+          this.grainCtx.putImageData(this.grainData, 0, 0);
+        }
+      } catch (err) {
+        console.error("FilmGrain update error:", err);
       }
     }
 
     apply(ctx, intensity = 0.05, colorize = true, hue = 217) {
-      ctx.save();
-      
-      ctx.globalCompositeOperation = 'screen';
-      ctx.globalAlpha = intensity * 0.4;
-      ctx.drawImage(this.grainCanvas, 0, 0);
-      
-      ctx.globalCompositeOperation = 'multiply';
-      ctx.globalAlpha = Math.max(0, 1 - (intensity * 0.25));
-      ctx.drawImage(this.grainCanvas, 0, 0);
-      
-      if (colorize) {
-        ctx.globalCompositeOperation = 'overlay';
-        ctx.globalAlpha = intensity * 0.2;
-        ctx.fillStyle = `hsla(${hue}, 50%, 50%, 1)`;
-        ctx.fillRect(0, 0, this.width, this.height);
+      if (!ctx || !this.grainCtx || !this.grainCanvas) return;
+      try {
+        ctx.save();
+        
+        ctx.globalCompositeOperation = 'screen';
+        ctx.globalAlpha = intensity * 0.4;
+        ctx.drawImage(this.grainCanvas, 0, 0);
+        
+        ctx.globalCompositeOperation = 'multiply';
+        ctx.globalAlpha = Math.max(0, 1 - (intensity * 0.25));
+        ctx.drawImage(this.grainCanvas, 0, 0);
+        
+        if (colorize) {
+          ctx.globalCompositeOperation = 'overlay';
+          ctx.globalAlpha = intensity * 0.2;
+          ctx.fillStyle = `hsla(${hue}, 50%, 50%, 1)`;
+          ctx.fillRect(0, 0, this.width, this.height);
+        }
+        
+        ctx.restore();
+      } catch (err) {
+        console.error("FilmGrain apply error:", err);
       }
-      
-      ctx.restore();
     }
 
     resize(width, height) {
       this.width = width;
       this.height = height;
-      this.grainCanvas.width = width;
-      this.grainCanvas.height = height;
+      if (this.grainCanvas) {
+        this.grainCanvas.width = width;
+        this.grainCanvas.height = height;
+      }
       this.generateGrainPattern();
     }
   }
@@ -125,16 +147,25 @@ export const MusicReactiveHero = () => {
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.warn("Canvas 2D Context is not available.");
+      return;
+    }
     
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      if (beam.filmGrain) {
+      if (beam && beam.filmGrain) {
         beam.filmGrain.resize(canvas.width, canvas.height);
       }
     };
     
-    const filmGrain = new FilmGrain(window.innerWidth, window.innerHeight);
+    let filmGrain = null;
+    try {
+      filmGrain = new FilmGrain(window.innerWidth, window.innerHeight);
+    } catch (err) {
+      console.error("Failed to create FilmGrain:", err);
+    }
     
     const beam = {
       bassIntensity: 0,
@@ -320,8 +351,10 @@ export const MusicReactiveHero = () => {
       });
       
       // Post processing
-      beam.filmGrain.update();
-      beam.filmGrain.apply(ctx, beam.postProcessing.filmGrainIntensity, true, beam.colorState.hue);
+      if (beam.filmGrain) {
+        beam.filmGrain.update();
+        beam.filmGrain.apply(ctx, beam.postProcessing.filmGrainIntensity, true, beam.colorState.hue);
+      }
       
       // Scanlines
       ctx.strokeStyle = `rgba(0, 0, 0, ${beam.postProcessing.scanlineIntensity})`;
