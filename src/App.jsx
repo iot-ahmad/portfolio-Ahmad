@@ -63,12 +63,24 @@ function Nav() {
   );
 }
 
+// Keep track of elements that have been revealed so React doesn't strip the class on re-render
+const revealedElements = new Set();
+
 // ── Reveal hook ──
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll('.reveal');
     const io  = new IntersectionObserver((entries) => {
-      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          const id = e.target.getAttribute('data-reveal-id');
+          if (id) {
+            revealedElements.add(id);
+          }
+          io.unobserve(e.target);
+        }
+      });
     }, { threshold: 0.1 });
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -92,7 +104,10 @@ function CertSection() {
   return (
     <section id="certs">
       <div className="section-inner">
-        <div className="section-header reveal">
+        <div 
+          className={`section-header reveal ${revealedElements.has('certs-header') ? 'visible' : ''}`}
+          data-reveal-id="certs-header"
+        >
           <span className="section-num">03</span>
           <h2 className="section-title">Certifications</h2>
         </div>
@@ -100,7 +115,8 @@ function CertSection() {
           {CERTS.map(c => (
             <div key={c.name}>
               <div
-                className={`cert-row reveal cert-clickable${open === c.name ? ' cert-open' : ''}`}
+                className={`cert-row reveal cert-clickable ${open === c.name ? 'cert-open' : ''} ${revealedElements.has(c.name) ? 'visible' : ''}`}
+                data-reveal-id={c.name}
                 onClick={() => toggle(c.name)}
                 role="button"
                 tabIndex={0}
