@@ -1,0 +1,28 @@
+/* ── Reset & Root ── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black:       #080808;
+  --surface:     #111111;
+  --border:      #1e1e1e;
+  --muted:       #444;
+  --dim:         #777;
+  --text:        #d8d8d8;
+  --bright:      #f0f0f0;
+  --accent:      #4f8ef7;
+  --accent-dim:  rgba(79,142,247,0.12);
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:   'Inter', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}

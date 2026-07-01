@@ -1,0 +1,197 @@
+/* ── Music Reactive Hero Section CSS ── */
+.music-reactive-hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background: #080808;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  text-align: center;
+}
+
+.visualization-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 0 24px;
+  pointer-events: none;
+}
+
+.hero-tagline {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #4f8ef7;
+  margin-bottom: 24px;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-size: clamp(54px, 9vw, 120px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  margin-bottom: 28px;
+  text-transform: uppercase;
+}
+
+.title-line {
+  display: block;
+}
+
+.title-outline {
+  color: transparent !important;
+  -webkit-text-stroke: 1px rgba(240, 240, 240, 0.25);
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: 14.5px;
+  color: #888;
+  max-width: 480px;
+  margin: 0 auto 16px;
+  line-height: 1.7;
+  font-family: 'Inter', sans-serif;
+}
+
+.hero-credit {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #444;
+}
+
+/* Play button */
+.play-button {
+  position: relative;
+  z-index: 3;
+  margin-top: 24px;
+  padding: 10px 30px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #000;
+  background: #fff;
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1);
+}
+
+.play-button:hover:not(:disabled) {
+  background: transparent;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 30px rgba(79, 142, 247, 0.3);
+  border-color: #4f8ef7;
+}
+
+.play-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.play-button.playing {
+  background: rgba(79, 142, 247, 0.12);
+  color: #4f8ef7;
+  border-color: #4f8ef7;
+}
+
+/* Audio progress */
+.audio-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+  z-index: 10;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4f8ef7, #a78bfa);
+  transition: width 0.1s linear;
+}
+
+/* Corner info */
+.corner-info {
+  position: absolute;
+  top: 40px;
+  right: 48px;
+  z-index: 10;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #444;
+  font-family: monospace;
+}
+
+/* Bottom info */
+.bottom-info {
+  position: absolute;
+  bottom: 40px;
+  left: 48px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.artist-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #111;
+  border: 1px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #4f8ef7;
+}
+
+.artist-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
+  letter-spacing: 0.05em;
+}
+
+.social-handle {
+  font-size: 11px;
+  color: #444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .corner-info {
+    top: 24px;
+    right: 24px;
+  }
+  .bottom-info {
+    bottom: 24px;
+    left: 24px;
+  }
+}
