@@ -89,6 +89,7 @@ function useReveal() {
 
 // ── Certs with expandable images ──
 const CERTS = [
+  { name: 'Learn JavaScript',                           issuer: 'Scrimba — July 2026',                              badge: 'Completed',  img: '/certs/cert7.jpg' },
   { name: 'HCIA-IoT V3.0',                              issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert6.jpg' },
   { name: 'HCIA-openEuler V2.0',                        issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert2.jpg' },
   { name: 'Cloud Advanced: Architecture & Technologies', issuer: 'Huawei ICT Academy — May 2026',                    badge: 'Certified',  img: '/certs/cert1.jpg' },
